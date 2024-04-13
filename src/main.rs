@@ -25,6 +25,7 @@ fn main() {
                 systems::move_player,
                 systems::spawn_preview,
                 systems::spawn_attack,
+                systems::despawn_attack,
             )
         )
         .run();

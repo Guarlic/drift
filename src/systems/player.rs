@@ -9,7 +9,7 @@ pub fn spawn_player(mut commands: Commands) {
             custom_size: Some(Vec2::new(50., 50.)),
             ..default()
         },
-        transform: Transform::from_xyz(0., 0., 0.),
+        transform: Transform::from_xyz(0., 0., -1.),
         ..default()
     };
 
