@@ -22,6 +22,7 @@ fn main() {
         )
         .add_systems(
             Update, (
+                systems::game_over,
                 systems::move_player,
                 systems::spawn_preview,
                 systems::spawn_attack,
