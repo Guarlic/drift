@@ -16,12 +16,15 @@ fn main() {
         .add_systems(
             Startup, (
                 systems::spawn_camera,
-                systems::spawn_player
+                systems::spawn_player,
+                systems::spawn_timers,
             )
         )
         .add_systems(
             Update, (
                 systems::move_player,
+                systems::spawn_preview,
+                systems::spawn_attack,
             )
         )
         .run();

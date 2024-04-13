@@ -37,8 +37,6 @@ pub fn move_player(
                 
                 player_transform.translation += *direction;
 
-                println!("player transform: {}, {}", player_transform.translation.x, player_transform.translation.y);
-
                 player_transform.translation.x = player_transform.translation.x.clamp(-CLAMP_X, CLAMP_X);
                 player_transform.translation.y = player_transform.translation.y.clamp(-CLAMP_Y, CLAMP_Y);
             }
