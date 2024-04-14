@@ -1,3 +1,4 @@
+use crate::SCORE;
 use bevy::prelude::*;
 use rand::Rng;
 
@@ -110,6 +111,10 @@ pub fn despawn_attack(
         if timer.0.tick(time.delta()).just_finished() {
             for attack in attack_query.iter() {
                 commands.entity(attack).despawn();
+
+                unsafe {
+                    SCORE += 1;
+                }
             }
         }
     }

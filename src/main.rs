@@ -2,6 +2,8 @@ use bevy::prelude::*;
 
 mod systems;
 
+pub static mut SCORE: i32 = 0;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
@@ -16,6 +18,7 @@ fn main() {
         .add_systems(
             Startup, (
                 systems::spawn_camera,
+                systems::spawn_grid,
                 systems::spawn_player,
                 systems::spawn_timers,
             )
