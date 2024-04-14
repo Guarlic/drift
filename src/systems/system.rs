@@ -4,11 +4,8 @@ use super::attack::*;
 use bevy::prelude::*;
 use bevy::sprite::collide_aabb::collide;
 
-#[derive(Component)]
-pub struct Camera;
-
 pub fn spawn_camera(mut commands: Commands) {
-    commands.spawn((Camera2dBundle::default(), Camera));
+    commands.spawn(Camera2dBundle::default());
 }
 
 pub fn spawn_grid(mut commands: Commands, asset_server: Res<AssetServer>) {

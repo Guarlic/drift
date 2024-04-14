@@ -104,14 +104,15 @@ pub fn spawn_attack(
 
 pub fn despawn_attack(
     time: Res<Time>,
-    mut timer_query: Query<(&mut TimerStruct, Entity), With<DespawnTimer>>,
+    mut timer_query: Query<&mut TimerStruct, With<DespawnTimer>>,
+    timers_query: Query<Entity, With<TimerStruct>>,
     player_query: Query<Entity, With<Player>>,
     preview_query: Query<Entity, With<Preview>>,
     attack_query: Query<Entity, With<Attack>>,
     mut commands: Commands,
     asset_server: Res<AssetServer>
 ) {
-    for (mut timer, timer_entity) in timer_query.iter_mut() {
+    for mut timer in timer_query.iter_mut() {
         if timer.0.tick(time.delta()).just_finished() {
             for attack in attack_query.iter() {
                 commands.entity(attack).despawn();
@@ -120,7 +121,9 @@ pub fn despawn_attack(
                     SCORE += 1;
 
                     if SCORE >= 30 {
-                        commands.entity(timer_entity).despawn();
+                        for timers in timers_query.iter() {
+                            commands.entity(timers).despawn();
+                        }
 
                         for player in player_query.iter() {
                             commands.entity(player).despawn();
