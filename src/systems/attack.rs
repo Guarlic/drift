@@ -1,4 +1,5 @@
 use crate::SCORE;
+use super::player::Player;
 use bevy::prelude::*;
 use rand::Rng;
 
@@ -103,17 +104,51 @@ pub fn spawn_attack(
 
 pub fn despawn_attack(
     time: Res<Time>,
-    mut timer_query: Query<&mut TimerStruct, With<DespawnTimer>>,
+    mut timer_query: Query<(&mut TimerStruct, Entity), With<DespawnTimer>>,
+    player_query: Query<Entity, With<Player>>,
+    preview_query: Query<Entity, With<Preview>>,
     attack_query: Query<Entity, With<Attack>>,
-    mut commands: Commands
+    mut commands: Commands,
+    asset_server: Res<AssetServer>
 ) {
-    for mut timer in timer_query.iter_mut() {
+    for (mut timer, timer_entity) in timer_query.iter_mut() {
         if timer.0.tick(time.delta()).just_finished() {
             for attack in attack_query.iter() {
                 commands.entity(attack).despawn();
 
                 unsafe {
                     SCORE += 1;
+
+                    if SCORE >= 30 {
+                        commands.entity(timer_entity).despawn();
+
+                        for player in player_query.iter() {
+                            commands.entity(player).despawn();
+                        }
+
+                        for attack in attack_query.iter() {
+                            commands.entity(attack).despawn();
+                        }
+
+                        for preview in preview_query.iter() {
+                            commands.entity(preview).despawn();
+                        }
+
+                        let text = Text2dBundle {
+                            text: Text::from_section(
+                                format!("Game Clear!"),
+                                TextStyle {
+                                    font_size: 100.,
+                                    font: asset_server.load("font.ttf"),
+                                    color: Color::rgb(1., 1., 0.),
+                                    ..default()
+                                },
+                            ),
+                            ..default()
+                        };
+
+                        commands.spawn(text);
+                    }
                 }
             }
         }

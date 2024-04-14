@@ -43,8 +43,6 @@ pub fn game_over(
             );
 
             if collision.is_some() {
-                println!("Game Over!");
-
                 commands.entity(player).despawn();
                 commands.entity(attack).despawn();
 
