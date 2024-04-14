@@ -30,7 +30,6 @@ pub fn game_over(
     attack_query: Query<(&Transform, &Sprite, Entity), With<Attack>>,
     preview_query: Query<Entity, With<Preview>>,
     timer_query: Query<Entity, With<TimerStruct>>,
-    query: Query<Entity, Without<Camera>>,
     mut commands: Commands,
     asset_server: Res<AssetServer>
 ) {
