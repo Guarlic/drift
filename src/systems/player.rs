@@ -3,12 +3,13 @@ use bevy::prelude::*;
 #[derive(Component)]
 pub struct Player;
 
-pub fn spawn_player(mut commands: Commands) {
+pub fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
     let player = SpriteBundle {
         sprite: Sprite {
             custom_size: Some(Vec2::new(50., 50.)),
             ..default()
         },
+        texture: asset_server.load("player.png"),
         transform: Transform::from_xyz(0., 0., 0.),
         ..default()
     };
